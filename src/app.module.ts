@@ -8,7 +8,6 @@ import { MoviesModule } from './modules/movies/movies.module';
 import { PurchasesModule } from './modules/purchases/purchases.module';
 import { UsersModule } from './modules/users/users.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({

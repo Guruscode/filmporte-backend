@@ -9,7 +9,7 @@ import { AppLogger } from './common/logger/app.logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: new AppLogger(),          // ← clean logger
+    logger: new AppLogger(),
   });
   const configService = app.get(ConfigService);
 
@@ -25,9 +25,9 @@ async function bootstrap() {
   // Global Validation Pipe
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,           // strip non-whitelisted properties
+      whitelist: true,
       forbidNonWhitelisted: true,
-      transform: true,           // auto-transform payloads to DTO instances
+      transform: true,
       transformOptions: {
         enableImplicitConversion: true,
       },
@@ -48,7 +48,7 @@ async function bootstrap() {
     .setTitle('Filmporte Movie Ticketing API')
     .setDescription(
       'REST API for a simplified movie ticketing platform. ' +
-      'Supports Producer and Viewer roles with JWT authentication.',
+        'Supports Producer and Viewer roles with JWT authentication.',
     )
     .setVersion('1.0')
     .addBearerAuth(
@@ -82,4 +82,4 @@ async function bootstrap() {
   console.log(`📚 Swagger docs available at: http://localhost:${port}/docs\n`);
 }
 
-bootstrap();
+void bootstrap();

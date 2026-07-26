@@ -12,9 +12,7 @@ import { Purchase } from '../entities/purchase.entity';
 import { Movie } from '../../movies/entities/movie.entity';
 
 @CommandHandler(PurchaseTicketCommand)
-export class PurchaseTicketHandler
-  implements ICommandHandler<PurchaseTicketCommand>
-{
+export class PurchaseTicketHandler implements ICommandHandler<PurchaseTicketCommand> {
   constructor(
     @InjectRepository(Purchase)
     private readonly purchaseRepository: Repository<Purchase>,

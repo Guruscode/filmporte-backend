@@ -261,9 +261,16 @@ movies/
 | `yarn dev` | Start development server (watch mode) |
 | `yarn build` | Build the application |
 | `yarn start:prod` | Run the production build |
-| `yarn lint` | Run ESLint |
+| `yarn format` | Auto-format code with Prettier |
+| `yarn lint` | Run ESLint with auto-fix |
 | `yarn test` | Run unit tests |
+| `yarn test:watch` | Run tests in watch mode |
+| `yarn test:cov` | Run tests with coverage report |
 | `yarn test:e2e` | Run end-to-end tests |
+| `yarn migration:create` | Create a new empty migration file |
+| `yarn migration:generate` | Generate a migration from entity changes |
+| `yarn migration:run` | Run pending migrations |
+| `yarn migration:revert` | Revert the last migration |
 
 ---
 
@@ -273,6 +280,158 @@ Once the application is running, Swagger documentation is available at:
 
 ```
 http://localhost:3000/docs
+```
+
+---
+
+# 🗄️ Database Migrations
+
+This project uses **TypeORM migrations** for safe, version-controlled schema changes.
+
+> ⚠️ **Important:** `DB_SYNCHRONIZE=true` is intended for development only.
+> In production, set `DB_SYNCHRONIZE=false` and use migrations.
+
+### When to use migrations
+
+Whenever you modify an entity file (add/remove columns, change types, add indexes),
+create a migration instead of relying on `synchronize`.
+
+### Workflow
+
+```bash
+# 1. Update your entity files (e.g., Movie, User, Purchase)
+
+# 2. Generate a migration from the changes
+yarn migration:generate src/database/migrations/YourMigrationName
+
+# 3. Review the generated SQL in the migration file
+
+# 4. Run the migration
+yarn migration:run
+
+# 5. (If needed) Revert the last migration
+yarn migration:revert
+```
+
+### How it works
+
+- `migration:generate` compares your entities against the database and produces
+  a migration class with `up()` and `down()` methods.
+- `migration:run` executes all pending migrations in order.
+- Migrations are stored in `src/database/migrations/`.
+- The CLI DataSource is configured in `src/config/typeorm.config.ts`.
+
+### Example
+
+```bash
+yarn migration:generate src/database/migrations/AddPosterUrlToMovies
+yarn migration:run
+```
+
+---
+
+# 🧪 Testing
+
+This project uses **Jest** as the test framework with **ts-jest** for TypeScript support.
+
+There are **49 unit tests** across **16 test suites** covering all handlers and services.
+
+### Test structure
+
+Tests are co-located with their source files in `__tests__` directories:
+
+```
+handlers/
+├── __tests__/
+│   ├── create-movie.handler.spec.ts
+│   ├── update-movie.handler.spec.ts
+│   ├── delete-movie.handler.spec.ts
+│   ├── get-movie-by-id.handler.spec.ts
+│   ├── get-my-movies.handler.spec.ts
+│   ├── get-published-movies.handler.spec.ts
+│   └── purchase-ticket.handler.spec.ts
+├── create-movie.handler.ts
+└── ...
+```
+
+### Running tests
+
+```bash
+# Run all tests
+yarn test
+
+# Run tests in watch mode (useful during development)
+yarn test:watch
+
+# Run tests with coverage report
+yarn test:cov
+
+# Run end-to-end tests
+yarn test:e2e
+```
+
+### Coverage
+
+Coverage reports are generated in the `/coverage` directory. Open `coverage/lcov-report/index.html` in a browser to view the full report.
+
+### Testing approach
+
+- **Unit tests** use mocked repositories (`jest.Mocked<Repository<T>>`) to isolate the handler/service logic.
+- **Handlers** are tested by executing commands/queries and asserting the repository interaction and return values.
+- **Services** are tested by verifying the correct command/query is dispatched to the CommandBus/QueryBus.
+- Edge cases (not found, forbidden, conflicts, empty results, custom pagination) are covered.
+
+---
+
+# 🤖 CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration and deployment.
+
+### Workflow: `.github/workflows/ci.yml`
+
+The pipeline runs on every push and pull request to `staging` and `develop` branches.
+
+### Stages
+
+| Stage | Command | What it does |
+|-------|---------|-------------|
+| **Install** | `yarn install --frozen-lockfile` | Installs exact dependencies from the lockfile |
+| **Lint** | `yarn lint` | Runs ESLint to catch code quality and formatting issues |
+| **Type check** | `npx tsc --noEmit` | Verifies TypeScript compiles cleanly (no type errors) |
+| **Tests** | `yarn test:cov` | Runs all 49 unit tests and generates a coverage report |
+| **Build** | `yarn build` | Compiles the NestJS production build |
+| **Coverage artifact** | `actions/upload-artifact` | Saves the coverage report for 7 days |
+
+### Auto-promotion (staging → develop)
+
+When code is pushed to the `staging` branch and all quality checks pass, the pipeline **automatically merges staging into `develop`**. This ensures `develop` always contains a tested, green build.
+
+### Concurrency
+
+If you push multiple commits in quick succession, the workflow **cancels any previous in-progress run** for the same branch, saving CI minutes.
+
+### Visual pipeline summary
+
+```
+Push to staging
+      │
+      ▼
+┌─────────────────────┐
+│   Quality Checks     │
+│  ┌───────────────┐  │
+│  │  Install       │  │
+│  │  Lint          │  │
+│  │  Type check    │  │
+│  │  Tests + Cover │  │
+│  │  Build         │  │
+│  └───────┬───────┘  │
+└──────────┼──────────┘
+           │
+           ▼ (pass)
+┌─────────────────────┐
+│  Auto-promote       │
+│  staging → develop  │
+└─────────────────────┘
 ```
 
 ---

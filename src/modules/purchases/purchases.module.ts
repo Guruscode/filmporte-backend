@@ -14,10 +14,7 @@ const CommandHandlers = [PurchaseTicketHandler];
 const QueryHandlers = [GetMyPurchasesHandler, GetProducerPurchasesHandler];
 
 @Module({
-  imports: [
-    CqrsModule,
-    TypeOrmModule.forFeature([Purchase, Movie]),
-  ],
+  imports: [CqrsModule, TypeOrmModule.forFeature([Purchase, Movie])],
   controllers: [PurchasesController],
   providers: [PurchasesService, ...CommandHandlers, ...QueryHandlers],
 })

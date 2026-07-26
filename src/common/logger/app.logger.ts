@@ -1,4 +1,4 @@
-import { LoggerService, LogLevel } from '@nestjs/common';
+import { LoggerService } from '@nestjs/common';
 
 export class AppLogger implements LoggerService {
   private context?: string;
@@ -27,22 +27,21 @@ export class AppLogger implements LoggerService {
     this.print('VERBOSE', message, context);
   }
 
-  private print(
-    level: string,
-    message: any,
-    context?: string,
-    trace?: string,
-  ) {
-    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+  private print(level: string, message: any, context?: string, trace?: string) {
+    const timestamp = new Date()
+      .toISOString()
+      .replace('T', ' ')
+      .substring(0, 19);
     const ctx = context || this.context || 'Application';
 
-    const color = {
-      LOG: '\x1b[32m',     // green
-      ERROR: '\x1b[31m',   // red
-      WARN: '\x1b[33m',    // yellow
-      DEBUG: '\x1b[36m',   // cyan
-      VERBOSE: '\x1b[35m', // magenta
-    }[level] || '\x1b[0m';
+    const color =
+      {
+        LOG: '\x1b[32m', // green
+        ERROR: '\x1b[31m', // red
+        WARN: '\x1b[33m', // yellow
+        DEBUG: '\x1b[36m', // cyan
+        VERBOSE: '\x1b[35m', // magenta
+      }[level] || '\x1b[0m';
 
     const reset = '\x1b[0m';
 

@@ -28,9 +28,7 @@ export class MoviesService {
   }
 
   delete(movieId: string, producerId: string) {
-    return this.commandBus.execute(
-      new DeleteMovieCommand(movieId, producerId),
-    );
+    return this.commandBus.execute(new DeleteMovieCommand(movieId, producerId));
   }
 
   getMyMovies(producerId: string, filter: MovieFilterDto) {

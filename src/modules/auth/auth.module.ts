@@ -18,21 +18,21 @@ const CommandHandlers = [RegisterHandler, LoginHandler];
     CqrsModule,
     TypeOrmModule.forFeature([User]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-  JwtModule.registerAsync({
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService) => {
-      const secret = configService.get<string>('jwt.secret');
-      const expiresIn = configService.get<string>('jwt.expiresIn') || '1d';
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const secret = configService.get<string>('jwt.secret');
+        const expiresIn = configService.get<string>('jwt.expiresIn') || '1d';
 
-      return {
-        secret: secret || 'default-secret',
-        signOptions: {
-          expiresIn: expiresIn as any, 
-        },
-      };
-    },
-  }),
+        return {
+          secret: secret || 'default-secret',
+          signOptions: {
+            expiresIn: expiresIn as any,
+          },
+        };
+      },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, ...CommandHandlers],

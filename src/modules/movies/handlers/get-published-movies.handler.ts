@@ -5,9 +5,7 @@ import { GetPublishedMoviesQuery } from '../queries/get-published-movies.query';
 import { Movie } from '../entities/movie.entity';
 
 @QueryHandler(GetPublishedMoviesQuery)
-export class GetPublishedMoviesHandler
-  implements IQueryHandler<GetPublishedMoviesQuery>
-{
+export class GetPublishedMoviesHandler implements IQueryHandler<GetPublishedMoviesQuery> {
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,
