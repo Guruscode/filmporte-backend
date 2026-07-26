@@ -1,98 +1,288 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🎬 Filmporte Backend – Movie Ticketing API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A clean, scalable REST API for a simplified movie ticketing platform built with **NestJS**, **TypeScript**, **CQRS**, **TypeORM**, and **PostgreSQL**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 📌 Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 🔐 Role-based authentication (Producer / Viewer)
+- 🔑 JWT Authentication
+- 🏗️ CQRS architecture for scalability and maintainability
+- 🎥 Full movie management for Producers
+- 🌍 Public listing of published movies
+- 🎟️ Ticket purchasing for Viewers (one ticket per movie)
+- 📄 Pagination and filtering
+- 📚 Swagger / OpenAPI documentation
+- ✅ Global validation, exception handling, and response transformation
 
-## Project setup
+---
 
-```bash
-$ yarn install
-```
+## 🛠 Tech Stack
 
-## Compile and run the project
+- NestJS
+- TypeScript
+- CQRS (`@nestjs/cqrs`)
+- TypeORM
+- PostgreSQL
+- Passport JWT
+- class-validator
+- class-transformer
+- Swagger (OpenAPI)
 
-```bash
-# development
-$ yarn run start
+---
 
-# watch mode
-$ yarn run start:dev
+# 🚀 Getting Started
 
-# production mode
-$ yarn run start:prod
-```
+## Prerequisites
 
-## Run tests
+Ensure you have the following installed:
 
-```bash
-# unit tests
-$ yarn run test
+- Node.js 18+
+- Yarn
+- PostgreSQL 14+
 
-# e2e tests
-$ yarn run test:e2e
+---
 
-# test coverage
-$ yarn run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## 1. Clone the Repository
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+git clone https://github.com/YOUR_USERNAME/filmporte-backend.git
+cd filmporte-backend
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## 2. Install Dependencies
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+yarn install
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## 3. Configure Environment Variables
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Copy the example environment file:
 
-## Stay in touch
+```bash
+cp .env.example .env
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Update the `.env` file with your PostgreSQL credentials.
 
-## License
+Example:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```env
+PORT=3000
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=password
+DB_NAME=filmporte
+
+JWT_SECRET=your-secret-key
+
+DB_SYNCHRONIZE=true
+```
+
+---
+
+## 4. Create the Database
+
+```bash
+psql -U postgres -c "CREATE DATABASE filmporte;"
+```
+
+---
+
+## 5. Run the Application
+
+Development mode:
+
+```bash
+yarn dev
+```
+
+Production build:
+
+```bash
+yarn build
+yarn start:prod
+```
+
+---
+
+## 🌐 API URLs
+
+| Service | URL |
+|----------|-----|
+| API | http://localhost:3000/api |
+| Swagger Documentation | http://localhost:3000/docs |
+
+---
+
+# 📖 API Overview
+
+## Authentication
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/v1/auth/register` | Register as Producer or Viewer | Public |
+| POST | `/api/v1/auth/login` | Login | Public |
+
+---
+
+## Movies
+
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| GET | `/api/v1/movies/published` | List published movies | Public |
+| GET | `/api/v1/movies/:id` | Get movie details | Public |
+| POST | `/api/v1/movies` | Create movie | Producer |
+| GET | `/api/v1/movies/my/list` | List my movies | Producer |
+| PUT | `/api/v1/movies/:id` | Update my movie | Producer |
+| DELETE | `/api/v1/movies/:id` | Delete my movie | Producer |
+
+---
+
+## Purchases
+
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| POST | `/api/v1/purchases` | Purchase a movie ticket | Viewer |
+| GET | `/api/v1/purchases/my` | View my purchases | Viewer |
+| GET | `/api/v1/purchases/producer` | View purchases for my movies | Producer |
+
+---
+
+# 🏛 Architecture Decisions
+
+This project follows modern backend architecture principles.
+
+### CQRS
+
+Commands and Queries are separated to improve:
+
+- Scalability
+- Testability
+- Maintainability
+- Clear separation of responsibilities
+
+### Modular Architecture
+
+The application is organized into independent modules:
+
+- Authentication
+- Movies
+- Purchases
+- Users
+- Common
+
+Each module owns its controllers, services, commands, queries, DTOs, and entities.
+
+### Security
+
+- JWT Authentication
+- Role-based Authorization
+- Route Guards
+- Custom Decorators
+
+### Global Application Features
+
+- Validation Pipes
+- Exception Filters
+- Response Interceptors
+- DTO Validation
+- Consistent API Responses
+
+### Database Design
+
+- UUID primary keys
+- Proper foreign key relationships
+- Unique constraints
+- Indexed lookup fields
+
+---
+
+# 📂 Project Structure
+
+```
+src/
+│
+├── auth/
+├── users/
+├── movies/
+├── purchases/
+├── common/
+├── config/
+├── database/
+└── main.ts
+```
+
+Each module follows the CQRS pattern:
+
+```
+movies/
+├── commands/
+├── queries/
+├── handlers/
+├── dto/
+├── entities/
+├── controllers/
+└── services/
+```
+
+---
+
+# 📌 Assumptions
+
+- A user can only have one role:
+  - Producer
+  - Viewer
+
+- A Viewer can purchase a particular movie only once.
+
+- This restriction is enforced at the database level.
+
+- `DB_SYNCHRONIZE=true` is intended for development only.
+
+- Production deployments should use database migrations.
+
+- Transaction references are mocked using UUID-based strings.
+
+---
+
+# 📜 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `yarn dev` | Start development server (watch mode) |
+| `yarn build` | Build the application |
+| `yarn start:prod` | Run the production build |
+| `yarn lint` | Run ESLint |
+| `yarn test` | Run unit tests |
+| `yarn test:e2e` | Run end-to-end tests |
+
+---
+
+# 📚 API Documentation
+
+Once the application is running, Swagger documentation is available at:
+
+```
+http://localhost:3000/docs
+```
+
+---
+
+# 👤 Author
+
+Built as part of the **Filmporte Backend Engineering Assessment**.
+
+---
+
+## 📄 License
+
+This project is provided for assessment purposes.
