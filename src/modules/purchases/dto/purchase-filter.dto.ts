@@ -4,6 +4,10 @@ import { IsInt, IsOptional, Min } from 'class-validator';
 import { PaginationDto } from '../../../common/dto/pagination.dto';
 
 export class PurchaseFilterDto extends PaginationDto {
+  @ApiPropertyOptional({ example: 1, default: 1, description: 'Page number' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
   @Min(1)
   page?: number = 1;
 

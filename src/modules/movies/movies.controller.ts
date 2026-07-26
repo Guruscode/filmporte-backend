@@ -11,12 +11,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiBearerAuth,
-  ApiResponse,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
@@ -53,10 +48,7 @@ export class MoviesController {
   @Roles(UserRole.PRODUCER)
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Create a new movie (Producer only)' })
-  create(
-    @Body() dto: CreateMovieDto,
-    @CurrentUser() user: { id: string },
-  ) {
+  create(@Body() dto: CreateMovieDto, @CurrentUser() user: { id: string }) {
     return this.moviesService.create(dto, user.id);
   }
 
@@ -91,10 +83,7 @@ export class MoviesController {
   @ApiBearerAuth('JWT-auth')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a movie (only owner)' })
-  async delete(
-    @Param('id') id: string,
-    @CurrentUser() user: { id: string },
-  ) {
+  async delete(@Param('id') id: string, @CurrentUser() user: { id: string }) {
     await this.moviesService.delete(id, user.id);
   }
 }

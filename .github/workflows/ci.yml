@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - staging
+      - develop
+  pull_request:
+    branches:
+      - staging
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Run tests with coverage
+        run: yarn test:cov
+
+      - name: Build
+        run: yarn build
+        env:
+          NODE_ENV: production
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  promote:
+    name: Promote staging → develop
+    needs: [quality]
+    if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout develop branch
+        uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch staging branch
+        run: git fetch origin staging
+
+      - name: Merge staging into develop
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git merge origin/staging --no-edit
+
+      - name: Push develop
+        run: git push origin develop

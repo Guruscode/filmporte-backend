@@ -5,9 +5,7 @@ import { GetProducerPurchasesQuery } from '../queries/get-producer-purchases.que
 import { Purchase } from '../entities/purchase.entity';
 
 @QueryHandler(GetProducerPurchasesQuery)
-export class GetProducerPurchasesHandler
-  implements IQueryHandler<GetProducerPurchasesQuery>
-{
+export class GetProducerPurchasesHandler implements IQueryHandler<GetProducerPurchasesQuery> {
   constructor(
     @InjectRepository(Purchase)
     private readonly purchaseRepository: Repository<Purchase>,

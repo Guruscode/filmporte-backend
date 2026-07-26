@@ -1,17 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiBearerAuth,
-  ApiResponse,
-} from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { PurchasesService } from './purchases.service';
 import { PurchaseTicketDto } from './dto/purchase-ticket.dto';
 import { PurchaseFilterDto } from './dto/purchase-filter.dto';
@@ -30,7 +18,9 @@ export class PurchasesController {
 
   @Post()
   @Roles(UserRole.VIEWER)
-  @ApiOperation({ summary: 'Purchase a ticket for a published movie (Viewer only)' })
+  @ApiOperation({
+    summary: 'Purchase a ticket for a published movie (Viewer only)',
+  })
   purchaseTicket(
     @Body() dto: PurchaseTicketDto,
     @CurrentUser() user: { id: string },
