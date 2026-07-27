@@ -26,7 +26,7 @@ export class User {
   email: string;
 
   @Column()
-  @Exclude() // never return password in responses
+  @Exclude()
   password: string;
 
   @Column()
