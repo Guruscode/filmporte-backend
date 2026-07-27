@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MoviesModule } from './modules/movies/movies.module';
 import { PurchasesModule } from './modules/purchases/purchases.module';
 import { UsersModule } from './modules/users/users.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UsersModule } from './modules/users/users.module';
     MoviesModule,
     PurchasesModule,
     UsersModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],

@@ -17,7 +17,7 @@ FROM node:22-alpine
 
 ENV NODE_ENV=production
 
-RUN apk add --no-cache tini postgresql-client
+RUN apk add --no-cache tini postgresql-client curl
 
 WORKDIR /app
 
@@ -34,6 +34,9 @@ COPY --from=builder /app/dist ./dist
 COPY scripts ./scripts
 
 RUN chmod +x scripts/start.sh
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:3000/api/v1/health || exit 1
 
 EXPOSE 3000
 
